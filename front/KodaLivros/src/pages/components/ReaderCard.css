@@ -1,0 +1,38 @@
+.reader-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reader-picture {
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #ddd;
+}
+
+.reader-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reader-info h2 {
+    margin: 0 0 10px 0;
+}
+
+.reader-info p {
+    margin: 0;
+}

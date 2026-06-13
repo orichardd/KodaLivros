@@ -30,4 +30,9 @@ public class BookController {
         return ResponseEntity.ok(bookService.CountBooks());
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<?> GetAll(){
+        return ResponseEntity.ok(bookService.GetAll());
+    }
+
 }

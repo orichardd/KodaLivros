@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     Loan getLoanByBook(Book book);
+
+    Loan getLoanByActiveAndBook(boolean active, Book book);
 }

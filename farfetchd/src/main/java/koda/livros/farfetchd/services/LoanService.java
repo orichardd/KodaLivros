@@ -40,6 +40,8 @@ public class LoanService {
             expectedReturnDate
         );
         loanRepository.save(newLoan);
+        book.SetIsTaken(true);
+        bookService.UpdateBook(book);
     }
 
     //se alguém ler isso, por favor entre em contato com richdd.dev@gmail.com
@@ -54,13 +56,15 @@ public class LoanService {
         if(book == null){
             throw new ResourceAccessException("Livro não encontrado.");
         }
-        Loan loan = loanRepository.getLoanByBook(book);
+        Loan loan = loanRepository.getLoanByActiveAndBook(true, book);
         if(loan == null){
             throw new IllegalArgumentException("Livro não está em nenhum empréstimo.");
         }
         LocalDate today = LocalDate.now();
         loan.setInactive();
         loanRepository.save(loan);
+        book.SetIsTaken(false);
+        bookService.UpdateBook(book);
         if(today.isAfter(loan.getMaxReturnDate()) ){
             return "Livro com atraso. Deveria ser entregue %s e foi em %s, %d dias de atraso.".formatted(loan.getMaxReturnDate(), today, ChronoUnit.DAYS.between(loan.getMaxReturnDate(), today));
         }

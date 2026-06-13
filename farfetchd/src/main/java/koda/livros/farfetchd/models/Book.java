@@ -103,6 +103,10 @@ public class Book {
         return createdAt;
     }
 
+    public void SetIsTaken(boolean bool){
+        this.isTaken = bool;
+    }
+
     public boolean isTaken() {
         return isTaken;
     }

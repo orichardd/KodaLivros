@@ -1,15 +1,13 @@
 package koda.livros.farfetchd.controllers;
 
 import koda.livros.farfetchd.DTOs.CreateLoanDTO;
+import koda.livros.farfetchd.DTOs.EndLoanDTO;
 import koda.livros.farfetchd.services.LoanService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/loan")
 public class LoanController {
 
@@ -30,14 +28,14 @@ public class LoanController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreateLoan(CreateLoanDTO dto){
+    public ResponseEntity<?> CreateLoan(@RequestBody CreateLoanDTO dto){
         loanService.CreateLoan(dto);
         return ResponseEntity.ok("Criado com sucesso");
     }
 
     @PostMapping("/end")
-    public ResponseEntity<?> EndLoan(@RequestParam String bookCode){
-        return ResponseEntity.ok(loanService.EndLoan(bookCode));
+    public ResponseEntity<?> EndLoan(@RequestBody EndLoanDTO dto){
+        return ResponseEntity.ok(loanService.EndLoan(dto.bookCode()));
     }
 
 }

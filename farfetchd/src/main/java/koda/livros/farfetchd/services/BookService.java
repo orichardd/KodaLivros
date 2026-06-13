@@ -8,6 +8,8 @@ import koda.livros.farfetchd.repositories.BookRepository;
 import koda.livros.farfetchd.utils.Utils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookService {
 
@@ -48,9 +50,15 @@ public class BookService {
         if(book == null){
             throw new IllegalArgumentException("Leitor não encontrado.");
         }
-        else if(!book.isTaken()){
-            throw new IllegalArgumentException("Livro ja pego");
-        }
         return book;
+    }
+
+    public void UpdateBook(Book book) {
+        bookRepository.save(book);
+        System.out.println("livro atualizado " + book.getTitle());
+    }
+
+    public List<Book> GetAll() {
+        return bookRepository.findAll();
     }
 }
