@@ -33,6 +33,13 @@ public class LoanService {
         if(reader == null || book == null){
             throw new IllegalArgumentException("Usuário ou livro nao encontrado.");
         }
+        if(book.isTaken()){
+            throw new IllegalArgumentException("Livro já pego");
+        }
+        List<Loan> numBooks = loanRepository.getLoansByActiveAndReader(true, reader);
+        if((long) numBooks.size() >= reader.getMaxBooks()){
+            throw new IllegalArgumentException("Limite de empréstimos atingidos");
+        }
         LocalDate expectedReturnDate = LocalDate.now().plusDays((dto.days()));
         Loan newLoan = new Loan(
             book,
@@ -48,7 +55,8 @@ public class LoanService {
     //Neste mundo uma coisa é certa: as pessoas não tem controle nem mesmo sobre sua própria vontade.
 
     public Long CountLoans(){
-        return loanRepository.count();
+
+        return loanRepository.countLoansByActive(true);
     }
 
     public String EndLoan(String bookCode) {

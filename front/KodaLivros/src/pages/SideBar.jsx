@@ -31,7 +31,9 @@ export default function SideBar() {
                 </Link>
             </nav>
 
-            <Link to="/logout" className="nav-link logout">
+            <Link onClick={
+                localStorage.setItem("adminCode", null)
+            } to="/login" className="nav-link logout">
                 <img src="../icons/logout.png" alt="Logout" className="left-icon" />
                 Logout
             </Link>

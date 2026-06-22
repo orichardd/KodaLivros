@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> Login(@RequestBody LoginUserDTO dto){
         User user = userService.Login(dto);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(user.getCode());
     }
 
 }

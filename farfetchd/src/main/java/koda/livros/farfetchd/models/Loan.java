@@ -57,4 +57,8 @@ public class Loan {
     public void setInactive(){
         this.active = false;
     }
+
+    public boolean isActive() {
+        return active;
+    }
 }

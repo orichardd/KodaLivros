@@ -1,13 +1,12 @@
 import './LoanCard.css';
 
 export default function LoanCard({ loan }) {
-
     const returnDate = new Date(
         loan.maxReturnDate
     ).toLocaleDateString('pt-BR');
 
     return (
-        <div className="loan-card">
+        <div className={`loan-card ${loan.active ? '' : 'loan-card-finished'}`}>
 
             <img
                 className="loan-cover"
@@ -30,8 +29,14 @@ export default function LoanCard({ loan }) {
                         </span>
                     </div>
 
-                    <span className="loan-status">
-                        Emprestado
+                    <span
+                        className={`loan-status ${
+                            loan.active
+                                ? 'loan-status-active'
+                                : 'loan-status-inactive'
+                        }`}
+                    >
+                        {loan.active ? 'Emprestado' : 'Devolvido'}
                     </span>
 
                 </div>
@@ -41,13 +46,11 @@ export default function LoanCard({ loan }) {
                     <h3>Livro</h3>
 
                     <p>
-                        <strong>Autor:</strong>{" "}
-                        {loan.book.author}
+                        <strong>Autor:</strong> {loan.book.author}
                     </p>
 
                     <p>
-                        <strong>Código:</strong>{" "}
-                        {loan.book.code}
+                        <strong>Código:</strong> {loan.book.code}
                     </p>
 
                     <p className="description">
@@ -66,13 +69,11 @@ export default function LoanCard({ loan }) {
                     </p>
 
                     <p>
-                        <strong>Código:</strong>{" "}
-                        {loan.reader.code}
+                        <strong>Código:</strong> {loan.reader.code}
                     </p>
 
                     <p>
-                        <strong>Telefone:</strong>{" "}
-                        {loan.reader.phoneNumber}
+                        <strong>Telefone:</strong> {loan.reader.phoneNumber}
                     </p>
 
                 </div>
@@ -80,7 +81,7 @@ export default function LoanCard({ loan }) {
                 <div className="loan-footer">
 
                     <span>
-                        Devolver até:
+                        Prazo de devolução:
                     </span>
 
                     <strong>

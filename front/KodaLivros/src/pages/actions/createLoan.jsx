@@ -7,7 +7,7 @@ async function PostLoan(bookCode, readerCode, loanDays) {
         throw new Error("Preencha todos os campos.");
     }
 
-    const adminCode = "ADMIN00001";
+    const adminCode = localStorage.getItem("adminCode");
 
     const response = await api.post('/loan/create', {
         bookCode,

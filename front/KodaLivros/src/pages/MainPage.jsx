@@ -1,15 +1,57 @@
 import './MainPage.css';
-import { useState } from 'react';
+import '../index.css'
+import { useState, useEffect } from 'react';
 
 import SideBar from "./SideBar.jsx";
 import AddBook from './actions/addbook';
 import AddReader from './actions/addReader';
 import CreateLoan from './actions/createLoan';
 import ReceiveBook from './actions/receiveBook';
+import api from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainPage() {
 
     const [popup, setPopup] = useState(null);
+    const [books, setBooks] = useState([]);
+    const [loans, setLoans] = useState([]); 
+    const [readers, setReaders] = useState([]);
+    const navigate = useNavigate();
+
+    async function fetchBooks() {
+        try{
+            const response = await api.get('/books/count');
+            setBooks(response.data);
+        } catch (error) {
+            console.error('Error fetching books:', error);
+        }
+    };
+    async function fetchLoans() {
+        try{
+            const response = await api.get('/loan/count');
+            setLoans(response.data);
+        } catch (error) {
+            console.error('Error fetching loans:', error);
+        }
+    };
+    async function fetchReaders() {
+        try{
+            const response = await api.get('/readers/count');
+            setReaders(response.data);
+        } catch (error) {
+            console.error('Error fetching readers:', error);
+        }
+    };
+    useEffect(() => {
+        fetchBooks();
+        fetchLoans();
+        fetchReaders();
+
+        if(localStorage.getItem("adminCode") == null){
+        alert("Faça login para acessar o sistema.");
+        navigate('/login');
+    };
+    }, []);
 
     return (
         <div className="container">
@@ -24,19 +66,19 @@ export default function MainPage() {
 
                     <div className="card">
                         <img src="../icons/book.png" alt="Livros Disponíveis" className="top-icon" />
-                        <h3>510</h3>
+                        <h3>{books}</h3>
                         <p>Livros Disponíveis</p>
                     </div>
 
                     <div className="card">
                         <img src="../icons/exchange.png" alt="Empréstimos" className="top-icon" />
-                        <h3>5</h3>
+                        <h3>{loans}</h3>
                         <p>Empréstimos ativos</p>
                     </div>
 
                     <div className="card">
                         <img src="../icons/person.png" alt="Leitores Registrados" className="top-icon" />
-                        <h3>54</h3>
+                        <h3>{readers}</h3>
                         <p>Leitores registrados</p>
                     </div>
 
